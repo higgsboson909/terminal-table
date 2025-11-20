@@ -1,7 +1,9 @@
 import os
 import json
+from choose import getChoices
+from choose import get_timetable
 from request import download_json_file
-from semester_table import semester_table
+from structure_sem_table import semester_table
 
 JSON_URL = "https://griffin-k.github.io/Time-Table-Actions/read-data.json" 
 
@@ -47,3 +49,6 @@ if (not semester_data()):
     except json.JSONDecodeError as e:
         print(f"Error: Failed to decode JSON from the file. Details: {e}")
 
+
+choices = getChoices()
+get_timetable(choices)

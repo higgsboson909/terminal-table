@@ -108,27 +108,28 @@ def getChoices():
     print(choices)
     return choices
     
-choices = getChoices()
-semester = choices['semester']
-program = choices['program']
-section= choices['section']
+def get_timetable(choices):
 
-try:
-    # Navigate the nested dictionary structure using the three chosen keys
-    timetable_details = data['timetable_by_group'][semester][program][section]
+    semester = choices['semester']
+    program = choices['program']
+    section= choices['section']
 
-    # --- Step 2: Print or process the retrieved data ---
-    print("\n--- Final Timetable Details ---")
-    print(f"Details for {semester}, {program}, Section {section}:")
-    
-    # Check if the details is a dictionary (common for timetable data)
-    if isinstance(timetable_details, dict):
-        # Print each key/value pair in the details (e.g., 'course', 'time', 'room')
-        for key, value in timetable_details.items():
-            print(f"  **{key.capitalize()}:** {value}")
-    else:
-        # Handle cases where the final section value is just a simple string or list
-        print(timetable_details)
+    try:
+        # Navigate the nested dictionary structure using the three chosen keys
+        timetable_details = data['timetable_by_group'][semester][program][section]
 
-except KeyError as e:
-    print(f"\nError: Could not find data for the selection. Missing key: {e}")
+        # --- Step 2: Print or process the retrieved data ---
+        print("\n--- Final Timetable Details ---")
+        print(f"Details for {semester}, {program}, Section {section}:")
+        
+        # Check if the details is a dictionary (common for timetable data)
+        if isinstance(timetable_details, dict):
+            # Print each key/value pair in the details (e.g., 'course', 'time', 'room')
+            for key, value in timetable_details.items():
+                print(f"  **{key.capitalize()}:** {value}")
+        else:
+            # Handle cases where the final section value is just a simple string or list
+            print(timetable_details)
+
+    except KeyError as e:
+        print(f"\nError: Could not find data for the selection. Missing key: {e}")

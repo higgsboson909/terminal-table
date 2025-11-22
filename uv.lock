@@ -116,7 +116,7 @@ wheels = [
 ]
 
 [[package]]
-name = "terminal-table"
+name = "ttable"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

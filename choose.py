@@ -1,4 +1,5 @@
 import json
+import os.path
 from table import full_view
 from prompt_toolkit.filters import is_done
 from prompt_toolkit.formatted_text import HTML
@@ -32,13 +33,14 @@ except json.JSONDecodeError as e:
 
 answers = {}  # store selected results
 
-def ask_choice(label, options):
+def ask_choice(label, options, pref=None):
     """
     Ask a choice question and display only the selected result afterward.
     """
     result = choice(
         message=f"{label}:",
         options=options,
+        default=pref,
         show_frame=~is_done,
         style=style,
         bottom_toolbar=HTML(
@@ -60,6 +62,26 @@ def ask_choice(label, options):
     return result
 
 def getChoices():
+ 
+
+    pref = None
+    if os.path.isfile('./pref.json'):
+        with open('pref.json', 'r') as json_file:
+            pref = json.load(json_file)
+    else:
+        with open("pref.json", 'w') as json_file:
+            json.dump({
+                "semester": "",
+                "program": "",
+                "section": ""
+            }, json_file, indent=4)
+        pref =  {
+            "semester": "",
+            "program": "",
+            "section": ""
+        }
+
+
 
     choices = {}
 
@@ -73,7 +95,8 @@ def getChoices():
 
     semester = ask_choice(
         "Semester",
-        semester_options
+        semester_options,
+        pref['semester']
     )
     choices['semester'] = semester
     
@@ -88,7 +111,8 @@ def getChoices():
 
     program = ask_choice(
         "Program",
-        program_options
+        program_options,
+        pref['program']
     )
     choices['program'] = program
 
@@ -102,12 +126,17 @@ def getChoices():
 
     section = ask_choice(
         "Section",
-        section_options
+        section_options,
+        pref['section']
     )
 
     choices['section'] = section
-    # print(choices)
+
+    with open("pref.json", 'w') as json_file:
+        json.dump(choices, json_file, indent=4)
+
     return choices
+
     
 def get_table_data(choices):
 

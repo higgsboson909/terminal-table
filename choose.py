@@ -118,18 +118,25 @@ def get_timetable(choices):
         # Navigate the nested dictionary structure using the three chosen keys
         timetable_details = data['timetable_by_group'][semester][program][section]
 
-        # --- Step 2: Print or process the retrieved data ---
-        print("\n--- Final Timetable Details ---")
-        print(f"Details for {semester}, {program}, Section {section}:")
-        
-        # Check if the details is a dictionary (common for timetable data)
-        if isinstance(timetable_details, dict):
-            # Print each key/value pair in the details (e.g., 'course', 'time', 'room')
-            for key, value in timetable_details.items():
-                print(f"  **{key.capitalize()}:** {value}")
-        else:
-            # Handle cases where the final section value is just a simple string or list
-            print(timetable_details)
+        for day, lectures in timetable_details.items():
+            print(day)
+            for lec in lectures:
+                print(lec)
+            # print(lectures)
 
+        # --- Step 2: Print or process the retrieved data ---
+        # print("\n--- Final Timetable Details ---")
+        # print(f"Details for {semester}, {program}, Section {section}:")
+        #
+        # # Check if the details is a dictionary (common for timetable data)
+        # if isinstance(timetable_details, dict):
+        #     # Print each key/value pair in the details (e.g., 'course', 'time', 'room')
+        #     for key, value in timetable_details.items():
+        #         print(f"  **{key.capitalize()}:** {value}")
+        # else:
+        #     # Handle cases where the final section value is just a simple string or list
+        #     print(timetable_details)
+
+        # print(timetable_details)
     except KeyError as e:
         print(f"\nError: Could not find data for the selection. Missing key: {e}")

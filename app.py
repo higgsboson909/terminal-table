@@ -1,7 +1,8 @@
 import os
 import json
 from choose import getChoices
-from choose import get_timetable
+from table import full_view
+from choose import get_table_data
 from request import download_json_file
 from structure_sem_table import semester_table
 
@@ -51,4 +52,5 @@ if (not semester_data()):
 
 
 choices = getChoices()
-get_timetable(choices)
+timetable_data = get_table_data(choices)
+full_view(timetable_data)

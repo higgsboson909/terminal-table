@@ -1,4 +1,5 @@
 import json
+from table import full_view
 from prompt_toolkit.filters import is_done
 from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit.shortcuts import choice
@@ -108,20 +109,21 @@ def getChoices():
     print(choices)
     return choices
     
-def get_timetable(choices):
+def get_table_data(choices):
 
     semester = choices['semester']
     program = choices['program']
     section= choices['section']
-
     try:
         # Navigate the nested dictionary structure using the three chosen keys
         timetable_details = data['timetable_by_group'][semester][program][section]
+        return timetable_details 
 
-        for day, lectures in timetable_details.items():
-            print(day)
-            for lec in lectures:
-                print(lec)
+        #
+        # for day, lectures in timetable_details.items():
+        #     print(day)
+        #     for lec in lectures:
+        #         print(lec)
             # print(lectures)
 
         # --- Step 2: Print or process the retrieved data ---

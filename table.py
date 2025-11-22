@@ -14,28 +14,59 @@ def today():
 
 
 def single_table(day_data, day):
+    
+    # table = Table(title=day, show_lines=False, row_styles=["reverse",""])
+    
+    # selected
+    # table = Table(
+    #     title=f"[bold]{day}[/bold ]",
+    #     show_lines=False,
+    #     header_style="bold cyan",
+    #     border_style="magenta",
+    #     title_style="bold italic cyan reverse",
+    #     box=box.ROUNDED
+    # )
 
-    table = Table(title=day, show_lines=False, row_styles=["reverse",""])
+    
+    # selected
+    table = Table(
+        title=f"[bold green]{day}[/bold green]",
+        header_style="bold black on green",
+        border_style="bright_green",
+        show_header=True,
+        show_lines=True,
+        box=box.ROUNDED,
+    )
 
-    table.add_column("Time", justify="left", style="cyan", no_wrap=True)
-    table.add_column("Subject", justify="left", style="magenta")
-    table.add_column("Teacher", justify="left", style="green")
-    table.add_column("Room", justify="left", style="magenta")
-   
-    for lec in day_data:
-        from_time =  convert_24_to_12(lec['from_time'])
-        end_time =  convert_24_to_12(lec['end_time'])
+
+    table.add_column("Time", justify="center", style="cyan", no_wrap=True)
+    table.add_column("Subject", justify="center", style="magenta")
+    table.add_column("Teacher", justify="center", style="green")
+    table.add_column("Room", justify="center", style="magenta")
+    table.add_section() 
+
+# Sort day_data by 'from_time'
+    sorted_day_data = sorted(
+        day_data,
+        key=lambda lec: tuple(map(int, lec['from_time'].split(':')))
+    )
+
+    for lec in sorted_day_data:
+        from_time = convert_24_to_12(lec['from_time'])
+        end_time = convert_24_to_12(lec['end_time'])
         time = f"{from_time} - {end_time}"
         table.add_row(time, lec['course_name'], lec['faculty_name'], lec['room_id'])
 
     console = Console()
     console.print(table)
+    print()
 
 
 def full_view(timetable_data):
     ordered_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    for day_data in timetable_data:
-        single_table(timetable_data[day_data], day_data)
+    for day_data in ordered_days:
+        if day_data in timetable_data:
+            single_table(timetable_data[day_data], day_data)
 
 def today_table(timetable_data):
     day = today()

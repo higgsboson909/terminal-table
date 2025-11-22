@@ -1,9 +1,6 @@
 import os
-from table import today_table 
 import json
 from choose import getChoices
-from table import full_view
-from choose import get_table_data
 from request import download_json_file
 from structure_sem_table import semester_table
 
@@ -13,7 +10,7 @@ def data():
     file_path = "./data.json"
 
     if os.path.isfile(file_path):
-        print(f"The file '{file_path}' exists and is a regular file.")
+        # print(f"The file '{file_path}' exists and is a regular file.")
         return True
     else:
         print(f"The file '{file_path}' does not exist or is not a regular file.")
@@ -23,7 +20,7 @@ def semester_data():
     file_path = "./semester_table_data.json"
 
     if os.path.isfile(file_path):
-        print(f"The file '{file_path}' exists and is a regular file.")
+        # print(f"The file '{file_path}' exists and is a regular file.")
         return True
     else:
         print(f"The file '{file_path}' does not exist or its not a regualr file.")
@@ -51,8 +48,4 @@ if (not semester_data()):
         print(f"Error: Failed to decode JSON from the file. Details: {e}")
 
 
-choices = getChoices()
-timetable_data = get_table_data(choices)
 
-# full_view(timetable_data)
-today_table(timetable_data)

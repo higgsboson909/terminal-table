@@ -9,8 +9,8 @@ file_path = 'data.json'
 try:
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
-        print("a imported successfully:")
-        print(f"The data type is: {type(data)}")
+        # print("a imported successfully:")
+        # print(f"The data type is: {type(data)}")
 except FileNotFoundError:
     print(f"Error: The file '{file_path}' was not found.")
 except json.JSONDecodeError as e:

@@ -1,4 +1,5 @@
 import os
+from table import today_table 
 import json
 from choose import getChoices
 from table import full_view
@@ -17,7 +18,6 @@ def data():
     else:
         print(f"The file '{file_path}' does not exist or is not a regular file.")
         return False 
-
 
 def semester_data():
     file_path = "./semester_table_data.json"
@@ -53,4 +53,6 @@ if (not semester_data()):
 
 choices = getChoices()
 timetable_data = get_table_data(choices)
-full_view(timetable_data)
+
+# full_view(timetable_data)
+today_table(timetable_data)

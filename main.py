@@ -6,6 +6,7 @@ from app import get_data
 from table import today_table 
 from table import full_view
 from choose import get_table_data
+import sys
 
 
 
@@ -16,13 +17,17 @@ def main():
     # Clear screen
     print("\033[2J\033[H", end="")
 
-
     print("Hello from ttable!")
     print()
     choices = getChoices(data)
     timetable_data = get_table_data(choices, data)
-    full_view(timetable_data)
-    today_table(timetable_data)
+    
+    if(len(sys.argv) > 1):
+        view = sys.argv[1]
+        if (view == "-f"):
+            full_view(timetable_data)
+    elif (len(sys.argv) == 1):
+        today_table(timetable_data)
 
 
 if __name__ == "__main__":

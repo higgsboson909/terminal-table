@@ -16,24 +16,36 @@ style = Style.from_dict(
     }
 )
 
-filename = 'semester_table_data.json'
+def load_data():
+    data = {}
+    filename = 'semester_table_data.json'
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+            print(f"Error: The file '{filename}' was not found.")
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to decode JSON from the file. Details: {e}")
+    return data
+    
 
-semester_list = []
-try:
-    with open(filename, 'r') as file:
-        data = json.load(file)
+def get_semester_list(data):
+    semester_list = []
+    try:
         for semester in data.get('timetable_by_group'):
             semester_list.append(semester)
 
-except FileNotFoundError:
-        print(f"Error: The file '{filename}' was not found.")
-except json.JSONDecodeError as e:
-    print(f"Error: Failed to decode JSON from the file. Details: {e}")
+    except FileNotFoundError:
+            print(f"Error: The file '{filename}' was not found.")
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to decode JSON from the file. Details: {e}")
+    return semester_list
+
 
 
 answers = {}  # store selected results
 
-def ask_choice(label, options, pref=None):
+def ask_choice(label, options, pref):
     """
     Ask a choice question and display only the selected result afterward.
     """
@@ -61,11 +73,10 @@ def ask_choice(label, options, pref=None):
     print()  # spacing
     return result
 
-def getChoices():
- 
+def getChoices(data):
 
     pref = None
-    if os.path.isfile('./pref.json'):
+    if os.path.isfile('pref.json'):
         with open('pref.json', 'r') as json_file:
             pref = json.load(json_file)
     else:
@@ -84,8 +95,10 @@ def getChoices():
 
 
     choices = {}
+    # print(pref)
 
     semester_options = []
+    semester_list = get_semester_list(data)
     for s in semester_list:
         a = []
         a.append(s)
@@ -102,6 +115,7 @@ def getChoices():
     
 
     program_options = []
+
     for p in data['timetable_by_group'][semester]:
         a = []
         a.append(p)
@@ -138,7 +152,7 @@ def getChoices():
     return choices
 
     
-def get_table_data(choices):
+def get_table_data(choices, data):
 
     semester = choices['semester']
     program = choices['program']

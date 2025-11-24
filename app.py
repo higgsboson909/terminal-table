@@ -26,26 +26,27 @@ def semester_data():
         print(f"The file '{file_path}' does not exist or its not a regualr file.")
         return False
 
+raw_data_exists = data()
+semester_data_exists = semester_data()
 
-if (not data()):
-    download_json_file(JSON_URL, "data.json")
+def get_data(raw_data_exists, semester_data_exists):
+    if (not raw_data_exists):
+        download_json_file(JSON_URL, "data.json")
 
 
-if (not semester_data()):
-    # Define the file name
-    filename = 'data.json'
+    if (not semester_data_exists):
+        # Define the file name
+        filename = 'data.json'
 
-    # Open the file and load the JSON data
-    try:
-        with open(filename, 'r') as file:
-            data = json.load(file)
-        
-        semester_table_data = semester_table(data)
+        # Open the file and load the JSON data
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
 
-    except FileNotFoundError:
-        print(f"Error: The file '{filename}' was not found.")
-    except json.JSONDecodeError as e:
-        print(f"Error: Failed to decode JSON from the file. Details: {e}")
-
+            semester_table(data)
+        except FileNotFoundError:
+            print(f"Error: The file '{filename}' was not found.")
+        except json.JSONDecodeError as e:
+            print(f"Error: Failed to decode JSON from the file. Details: {e}")
 
 

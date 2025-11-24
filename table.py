@@ -1,5 +1,5 @@
 from rich.console import Console
-from datetime import datetime
+from datetime import datetime, timedelta
 from rich.table import Table
 from rich import box
 
@@ -12,6 +12,12 @@ def today():
     today = datetime.today().strftime("%A")
     return today
 
+def next_day():
+    today = datetime.today()
+    # Corrected usage
+    tomorrow = today + timedelta(days=1)
+    next_day_name = tomorrow.strftime('%A')
+    return next_day_name
 
 def single_table(day_data, day):
     
@@ -68,10 +74,36 @@ def full_view(timetable_data):
         if day_data in timetable_data:
             single_table(timetable_data[day_data], day_data)
 
-def today_table(timetable_data):
-    day = today()
-    if day == "Saturday" or day == "Sunday":
-        single_table(timetable_data['Monday'], 'Monday')
-    else:
-        single_table(timetable_data[day], day)
+def oneday_table(arg, timetable_data):
+    days_list = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+
+    if(arg == "-t"):
+        day = today()
+        if day == "Saturday" or day == "Sunday":
+            print("No class Today!")
+        else:
+            single_table(timetable_data[day], day)
+    
+    elif(arg == "-n"):
+        day = next_day()
+        if day == "Saturday" or day == "Sunday":
+            print("No class Tomorrow!")
+        else:
+            single_table(timetable_data[day], day)
+    elif(arg in days_list):
+        if arg == 'mon':
+            single_table(timetable_data['Monday'], 'Monday')
+        elif arg == 'tue':
+            single_table(timetable_data['Tuesday'], 'Tuesday')
+        elif arg == 'wed':
+            single_table(timetable_data['Wednesday'], 'Wednesday')
+        elif arg == 'thu':
+            single_table(timetable_data['Thursday'], 'Thursday')
+        elif arg == 'fri':
+            single_table(timetable_data['Friday'], 'Friday')
+        elif arg == 'sat':
+            single_table(timetable_data['Saturday'], 'Saturday')
+        elif arg == 'sun':
+            print("Bhai! kya chahta hai?")
+
         

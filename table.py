@@ -75,35 +75,31 @@ def full_view(timetable_data):
             single_table(timetable_data[day_data], day_data)
 
 def oneday_table(arg, timetable_data):
-    days_list = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    days_dict = {'mon': "Monday", 'tue': "Tuesday", 'wed': "Wednesday", 'thu': "Thursday", 'fri': "Friday", 'sat': "Saturday", 'sun': "Sunday"}
 
     if(arg == "-t"):
         day = today()
-        if day == "Saturday" or day == "Sunday":
-            print("No class Today!")
-        else:
+        if day == "Sunday":
+            print("Bhai! Kya chahta hai?\nIt's Sunday today")
+        elif day in timetable_data:
             single_table(timetable_data[day], day)
+        else:
+            print(f"No class on {day}!")
     
     elif(arg == "-n"):
         day = next_day()
-        if day == "Saturday" or day == "Sunday":
-            print("No class Tomorrow!")
-        else:
+        if day == "Sunday":
+            print("Bhai! Kya chahta hai?\nIt's Sunday tomorrow")
+        elif day in timetable_data:
             single_table(timetable_data[day], day)
-    elif(arg in days_list):
-        if arg == 'mon':
-            single_table(timetable_data['Monday'], 'Monday')
-        elif arg == 'tue':
-            single_table(timetable_data['Tuesday'], 'Tuesday')
-        elif arg == 'wed':
-            single_table(timetable_data['Wednesday'], 'Wednesday')
-        elif arg == 'thu':
-            single_table(timetable_data['Thursday'], 'Thursday')
-        elif arg == 'fri':
-            single_table(timetable_data['Friday'], 'Friday')
-        elif arg == 'sat':
-            single_table(timetable_data['Saturday'], 'Saturday')
-        elif arg == 'sun':
-            print("Bhai! kya chahta hai?")
+        else:
+            print(f"No class on {day}!")
 
-        
+    elif(arg in days_dict):
+        day = days_dict[arg]
+        if day in timetable_data:
+            single_table(timetable_data[day], day)
+        elif day == "Sunday":
+            print("Bhai! Kya chahta hai?\nIt's Sunday tomorrow")
+        else:
+            print(f"No class on {day}!")
